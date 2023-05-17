@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Inter:400,800,900&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="javascript/jquery.js"></script>
+    <script src="sweetalert.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/6e55733586.js" crossorigin="anonymous"></script>
+    <script src="javascript/register.js" defer></script>
+    <link rel="stylesheet" href="style/index.css">
+    <title>Home</title>
+</head>
+<body>
+    <div id="container">
+        <nav>
+            <div id="title">
+                <h1>
+                    Todo mo yarn?
+                </h1>
+            </div>
+            <div id="navigation">
+                <div id="login">
+                    <p>Login</p>
+                </div>
+                <div id="register">
+                    <p>Register</p>
+                </div>
+            </div>
+        </nav>
+        <div id="body">
+            <p id="text1">
+                The only task tool you need for
+            </p>
+            <p id="text2">
+                Managing your tasks!
+            </p>
+            <p id="text3">Looking for task manager software to help you organize</p>
+            <p id="text4">individual and team tasks in one shared space? With Todo mo yarn, it’s</p>
+            <p id="text5">easy to collaborate with your team, no matter where you are.</p>
+            <div id="buttonOpen"><p>Join Us!</p></div>
+            <dialog id="regDialog">
+                <h1 id="t1">Register</h1>
+                <p id="t2">This is where you can register your account!</p>
+                <form method="POST" id="user_form" name="user_form">
+                    <p id="t2" style="margin-bottom: 0%;">Email</p>
+                    <div class="form-group">
+                        <input type="Email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email" style="margin-bottom: 10px;" name="email">
+                    </div>
+                    <p id="t2"style="margin-bottom: 0%;">Username</p>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="username" aria-describedby="emailHelp" placeholder="Enter Username" style="margin-bottom: 10px;" name="username">
+                    </div>
+                    <p id="t2"style="margin-bottom: 0%;">Password</p>
+                    <div class="form-group">
+                        <input type="password" class="form-control" id="password1" placeholder="Password" name="password1">
+                        <small style="text-align: left; font-weight: 100;">Please insert make your password 6-8 letters long</small>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control" id="password2" placeholder="Confirm Password" style="margin-bottom: 10px;" name="password2">
+                        
+                    </div>
+                    <div id="submitButton">
+                        <button name="register" type="submit" id="register2" onclick="return formValidation()">Register</button>
+                    </div>
+                    <script type="text/javascript">
+                        $(document).ready(function(e){
+                            $("#user_form").submit(function(e){
+                                e.preventDefault();
+                                $.ajax({
+                                    type: "POST",
+                                    url : "register.php",
+                                    data: $("#user_form").serialize(),
+                                    dataType: "json",
+                                    success: function(response){
+                                        console.log(response);
+                                        if(response.status){
+                                            Swal.fire(
+                                            'Good job!',
+                                            response.message,
+                                            'success'
+                                            )
+                                            modal.close();
+                                            $("#user_form")[0].reset();
+                                        }else{
+                                            modal.close();
+                                            Swal.fire({
+                                            title: 'Something went wrong!',
+                                            text: response.message,
+                                            icon: 'warning',
+                                            showCancelButton: true,
+                                            confirmButtonColor: '#3085d6',
+                                            cancelButtonColor: '#d33',
+                                            confirmButtonText: 'Try again'
+                                            }).then((result) => {
+                                            if (result.isConfirmed) {
+                                            modal.showModal();
+                                            }
+                                            })
+                                        }
+                                    }
+                                });
+                            });
+                        });
+                    </script>
+                    
+
+
+                </form>
+                
+                <p id="closeButton">Close</p>
+            </dialog>
+            <p id="text6">What is task management?</p>
+            <p id="text3">Task management is more than a to-do list. It means tracking tasks from beginning to end, delegating</p>
+            <p id="text3">subtasks to teammates, and setting deadlines to make sure projects get done on time. Task management</p>
+            <p id="text3">software, like Todo mo yarn, empowers teams to work more productively and efficiently.</p>  
+
+        </div>
+        <footer>
+            <div id="imgDiv">
+                <i class="fa-brands fa-facebook fa-2xl" onclick="facebook()"></i>
+                <i class="fa-brands fa-square-instagram fa-2xl" onclick="instagram()"></i>
+                <i class="fa-brands fa-google fa-2xl" onclick="gmail()"></i>
+                <i class="fa-brands fa-square-twitter fa-2xl" ></i>
+            </div>
+        </footer>
+    </div>
+    <dialog id="logDialog">
+        <h1 id="t1">Log In!</h1>
+            <p id="t2">This is where you can log in your account!</p>
+            <form method="POST" id="login_form" name="login_form">
+                <p id="t2" style="margin-bottom: 0%;">Username</p>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="usernameL" aria-describedby="emailHelp" placeholder="Enter Username" style="margin-bottom: 10px;" name="username">
+                    </div>
+                <p id="t2"style="margin-bottom: 0%;">Password</p>
+                    <div class="form-group">
+                        <input type="password" class="form-control" id="passwordL" placeholder="Password" name="password">
+                    </div>
+                <button name="login" type="submit" id="loginBtn" onclick="return LoginValidation()">Login</button>                
+            </form>
+            <script type="text/javascript">
+                function facebook(){
+                    window.open('https://www.facebook.com/Ayanokoj1', '_blank')
+                }
+                function instagram(){
+                    window.open('https://www.instagram.com/__russel.dc/', '_blank')
+                }
+                function gmail(){
+                    window.open('https://mail.google.com/mail/u/0/#search/delacruzruss12%40gmail.com?compose=CllgCJfrtdKtZKQqCXJzCKdqcCjZHdNpwlqmNqcmgVJQSlVSbrLFDPkRfNRwwcHMVwsQKGDTknV');
+                }
+                $(document).ready(function(e){
+                                $('#login_form').submit(function(e){
+                                    e.preventDefault();
+                                    $.ajax({
+                                        type: "POST",
+                                        url : "login.php",
+                                        data: $('#login_form').serialize(),
+                                        dataType: "json",
+                                        success: function(response){
+                                            console.log(response);
+                                            if(response.status){
+                                                modal2.close();
+                                                $("#login_form")[0].reset();
+                                                if(response.message == 'TRUE'){
+                                                    window.location.replace("7days.php");
+                                                }
+                                                else{
+                                                    window.location.replace("home.php");
+                                                }
+                                            }else{
+                                                modal2.close();
+                                                Swal.fire({
+                                                title: 'Something went wrong!',
+                                                text: response.message,
+                                                icon: 'warning',
+                                                showCancelButton: true,
+                                                confirmButtonColor: '#3085d6',
+                                                cancelButtonColor: '#d33',
+                                                confirmButtonText: 'Try again'
+                                                }).then((result) => {
+                                                if (result.isConfirmed) {
+                                                modal2.showModal();
+                                                }
+                                                })
+                                            }
+                                        }
+                                    });
+                                });
+                            });
+            </script>
+            <hr>
+            <div id="regBtn">
+                <p>Don't have an account?</p><p id="regClick"><b>&nbsp;Click Here!</b></p>
+            </div>
+            
+        <div id="closeButtondiv">
+            <button id="closeLogin">
+                <p>Close</p>
+            </button>
+        </div>
+        
+
+    </dialog>
+</body>
+</html>
